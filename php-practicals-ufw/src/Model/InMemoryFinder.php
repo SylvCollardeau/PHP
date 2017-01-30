@@ -4,7 +4,7 @@ use Model\FinderInterface;
 
 class InMemoryFinder implements FinderInterface{
 	
-	private $inMemory = array (
+	private $inMemory = array (0=>
 		"test1",
 		"test2",
 		"test3"
@@ -16,7 +16,7 @@ class InMemoryFinder implements FinderInterface{
      * @return array
      */
     public function findAll(){
-		return $this->$inMemory
+		return $this->inMemory;
 	}
 
     /**
@@ -26,7 +26,7 @@ class InMemoryFinder implements FinderInterface{
      * @return null|mixed
      */
     public function findOneById($id){
-		return $this->$inMemory[$id];
+		return $this->inMemory[$id];
 	}
-
+	
 }

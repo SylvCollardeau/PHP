@@ -67,7 +67,6 @@ class App
     public function get($pattern, $callable)
     {
         $this->registerRoute(self::GET, $pattern, $callable);
-
         return $this;
     }
     
@@ -131,6 +130,8 @@ class App
     private function registerRoute($method, $pattern, $callable)
     {
         $route = new Route($method, $pattern, $callable); 
-        $this->$routes["routes"] = $route;
+        
+        array_push($this->routes, $route);
+        
     }
 }
