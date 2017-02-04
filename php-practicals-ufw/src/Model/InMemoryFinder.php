@@ -5,9 +5,9 @@ use Model\FinderInterface;
 class InMemoryFinder implements FinderInterface{
 	
 	private $inMemory = array (0=>
-		"test1",
-		"test2",
-		"test3"
+		"status 1",
+		"status 2",
+		"status 3"
 	); 
 
 	/**

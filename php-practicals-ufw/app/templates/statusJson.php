@@ -1,11 +1,21 @@
 <html>
-	<body>
-		<br>
-		<?php foreach ($allStatus as $statuses){
-			for($i = 0; $i < count($statuses); $i++){
-				echo json_decode($statuses)[$i];
-			}
-		      }
-		?>
-	</body>
+    <body>               
+        <form action="/status" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" name="username">
+
+            <label for="message">Message:</label>
+            <textarea name="message"></textarea>
+
+            <input type="submit" value="Tweet!">
+        </form>
+        <br>
+        <br>
+        <?php
+        foreach ($allStatus as $statuses) {
+
+            echo $statuses . "<br><br>";
+        }
+        ?>
+    </body>
 </html>

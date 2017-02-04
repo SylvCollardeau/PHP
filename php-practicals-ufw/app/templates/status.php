@@ -1,11 +1,14 @@
 <html>
-	<body>
-		<br>
-		<?php foreach ($allStatus as $status){
+    <body>
 
-			echo $status . '<br>';
+        <br>
+        <br>
+        <?php
+        foreach ($allStatus as $status) {
 
-		      }
-		?>
-	</body>
+            echo $status . '<br><br>';
+        }
+        ?>
+        
+    </body>
 </html>
