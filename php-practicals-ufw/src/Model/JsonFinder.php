@@ -1,6 +1,7 @@
 <?php
 
 use Model\FinderInterface;
+use Exception\HttpException;
 
 class JsonFinder implements FinderInterface {
 
@@ -46,29 +47,56 @@ class JsonFinder implements FinderInterface {
         }
         return null;
     }
-    
+
     public function insertStatus($message){
-        
-        $file = __DIR__ . "/../../data/statuses.json";
-        
-         $statusJson = array();
 
+	$file = __DIR__ . "/../../data/statuses.json";
+	$jsonFile = file($file);
+
+	$statusJson = '{';
+	
+	$count = 1;
+        foreach ($jsonFile as $ligne) {
+            $ligne = json_decode($ligne, true);
+            foreach ($ligne as $key => $value) {
+            	$statusJson = $statusJson. '"' . $key . '":"'.$value .'",';
+	    	$count = $key + 1; 
+            }
+        }
+
+	$statusJson = $statusJson .'"'. $key . '":"'.$message.'"}';	
+	
+	file_put_contents($file, $statusJson);
+
+    }
+
+    public function suprStatus($id){
+
+	$file = __DIR__ . "/../../data/statuses.json";
         $jsonFile = file($file);
-
+	
+	$statusJson = '{';
 
         foreach ($jsonFile as $ligne) {
             $ligne = json_decode($ligne, true);
             foreach ($ligne as $key => $value) {
-                array_push($statusJson, $value);
+		if (isset($id)){
+                	if ($key != $id) {
+                    		$statusJson = $statusJson. '"' 
+					      . $key . '":"'.$value .'"'; 
+			}
+                }else{
+			throw new HttpException(404, 'Page Not Found');
+		}
             }
         }
-        
-        $message = "{'4': '$message'}";
-        
-        array_push($statusJson, $message)
-        
-        file_put_contents($file, $message);
-        
+
+	$statusJson = $statusJson .'}';
+
+	file_put_contents($file, $statusJson);
     }
+    
+
+
 
 }

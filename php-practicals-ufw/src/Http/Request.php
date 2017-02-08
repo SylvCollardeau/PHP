@@ -45,7 +45,7 @@ class Request {
     }
 
     public function getParameter($name, $default = null) {
-        
+        return $_POST[$name];
     }
 
     public static function createFromGlobals() {

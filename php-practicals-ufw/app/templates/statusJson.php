@@ -1,6 +1,6 @@
 <html>
     <body>               
-        <form action="/status" method="POST">
+           <form method="POST">
             <label for="username">Username:</label>
             <input type="text" name="username">
 

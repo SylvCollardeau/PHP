@@ -62,11 +62,22 @@ $app->post('/statusJson', function(Request $request) use ($app){
      
     $message =  $request->getParameter("message");
     
+    
     $memory = new JsonFinder();
     
     $memory->insertStatus($message);
     
     $app->redirect('/statusJson');
+});
+
+$app->delete('/statusJson/(\d+)', function(Request $request, $statusId) use ($app){
+	
+	$memory = new JsonFinder();
+	if ($memory->findOneById($statusId) != null) {
+		$memory->suprStatus($statusId);
+		$app->redirect('/status');
+    }
+    throw new HttpException(404, 'Page Not Found');	
 });
 // ...
 
