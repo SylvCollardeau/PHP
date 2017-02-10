@@ -75,7 +75,7 @@ $app->delete('/statusJson/(\d+)', function(Request $request, $statusId) use ($ap
 	$memory = new JsonFinder();
 	if ($memory->findOneById($statusId) != null) {
 		$memory->suprStatus($statusId);
-		$app->redirect('/status');
+		$app->redirect('/statusJson');
     }
     throw new HttpException(404, 'Page Not Found');	
 });

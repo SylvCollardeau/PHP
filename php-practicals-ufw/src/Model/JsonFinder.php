@@ -50,46 +50,56 @@ class JsonFinder implements FinderInterface {
 
     public function insertStatus($message){
 
-	$file = __DIR__ . "/../../data/statuses.json";
-	$jsonFile = file($file);
+		$file = __DIR__ . "/../../data/statuses.json";
+		$jsonFile = file($file);
 
-	$statusJson = '{';
-	
-	$count = 1;
-        foreach ($jsonFile as $ligne) {
-            $ligne = json_decode($ligne, true);
-            foreach ($ligne as $key => $value) {
-            	$statusJson = $statusJson. '"' . $key . '":"'.$value .'",';
-	    	$count = $key + 1; 
-            }
-        }
+		$statusJson = '{';
+		
+		$count = 1;
+			foreach ($jsonFile as $ligne) {
+				$ligne = json_decode($ligne, true);
+				foreach ($ligne as $key => $value) {
+					$count = $key + 1; 
+					$statusJson = $statusJson. '"' . $key . '":"'.$value .'",';
+					
+				}
+			}
 
-	$statusJson = $statusJson .'"'. $key . '":"'.$message.'"}';	
-	
-	file_put_contents($file, $statusJson);
+		$statusJson = $statusJson .'"'. $count . '":"'.$message.'"}';	
+		
+		file_put_contents($file, $statusJson);
 
     }
 
     public function suprStatus($id){
 
 	$file = __DIR__ . "/../../data/statuses.json";
-        $jsonFile = file($file);
+    $jsonFile = file($file);
+	
+	$count = 1;
+	$i = 1;
 	
 	$statusJson = '{';
 
         foreach ($jsonFile as $ligne) {
             $ligne = json_decode($ligne, true);
-            foreach ($ligne as $key => $value) {
-		if (isset($id)){
-                	if ($key != $id) {
-                    		$statusJson = $statusJson. '"' 
-					      . $key . '":"'.$value .'"'; 
+            if (isset($id)){
+				unset($ligne[$id]);
 			}
-                }else{
-			throw new HttpException(404, 'Page Not Found');
+			else{
+					throw new HttpException(404, 'Page Not Found');
+				}
+            foreach ($ligne as $key => $value) {
+				if ($key < count($ligne[$key])) {
+					$statusJson = $statusJson. '"' . $count . '":"'.$value .'",'; 							
+					$count = $count + 1;
+					$i = $i + 1;	
+				}else{
+					$statusJson = $statusJson. '"' . $count . '":"'.$value .'"'; 					
+				}	
+			}
 		}
-            }
-        }
+        
 
 	$statusJson = $statusJson .'}';
 
